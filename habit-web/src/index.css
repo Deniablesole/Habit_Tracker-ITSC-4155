@@ -1,3 +1,4 @@
+
 *,
 *::before,
 *::after { box-sizing: border-box; }
@@ -25,7 +26,10 @@
   --space-6: 48px;
 }
 
-html, body { height: 100%; }
+html, body { height: 100%;
+width: 100%;
+padding: 0;
+margin: 0; }
 
 body {
   margin: 0;
@@ -56,6 +60,7 @@ input { font: inherit; }
   background: rgba(15,18,22,.6);
   border-bottom: 1px solid var(--line);
   z-index: 10;
+  width: 100%;
 }
 .header-inner { display: flex; align-items: center; justify-content: space-between; padding: var(--space-3) 0; }
 .brand { margin: 0; font-size: 1.35rem; letter-spacing: .3px; font-weight: 700; }
