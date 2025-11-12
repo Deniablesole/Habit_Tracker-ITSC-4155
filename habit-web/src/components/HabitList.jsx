@@ -2,13 +2,19 @@ import HabitCard from "./HabitCard";
 
 function HabitList({habits, onComplete, onDelete, completingName, deletingName,}) {
 
-    if (!habits.length) return <p>No habits yet. Add one above.</p>;
+    const items = Array.isArray(habits) ? habits : [];
 
-    //again, remember to change the style stuff early, I have to find that brocode video
+    if (!items.length) {
+        return(
+            <div className="empty">
+                <p>No habits yet. Add one above to get started.</p>
+            </div>
+        );
+    }
 
     return (
-        <div style={{ display: "grid", gap: 12 }}>
-            {habits.map((h) => (
+        <div className="habit-list">
+            {items.map((h) => (
                 <HabitCard
                     key={h.name}
                     habit={h}
