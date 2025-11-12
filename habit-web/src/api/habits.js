@@ -1,9 +1,15 @@
 import { api } from "./client";
 
 // List all habits
+
+//Needed help updating this one
 export async function listHabits() {
   const { data } = await api.get("/habits");
-  return data;
+    return (Array.isArray(data) ? data : []).map(h => ({
+      name: h?.name ?? "",
+      streak: Number.isFinite(h?.streak) ? h.streak : 0,
+      logs: Array.isArray(h?.logs) ? h.logs : [],
+    }));
 }
 
 // Create a new habit

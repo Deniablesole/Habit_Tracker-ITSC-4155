@@ -1,35 +1,39 @@
 
 
 function HabitCard({habit, onComplete, onDelete, completing, deleting,}) {
-    const lastLog = habit.logs.at(-1) || "Never";
-    const disableBoth = completing || deleting;
 
-    // Temporary inline styling, will change later
+    const logs = Array.isArray(habit?.logs) ? habit.logs : [];
+    const lastLog = logs.length ? logs[logs.length - 1] : "Never";
+    const disabled = completing || deleting;
+
+
     return (
 
-        <div style={{ border: "1px solid #ddd", borderRadius: 8, padding: 12 }}>
+        <article className="card">
+            <div className="card-main">
 
-            <div style={{ display: "flex", justifyContent: "space-between", gap: 12 }}>
-
-                <div>
-                    <strong>{habit.name}</strong>
-                    <div>Streak: {habit.streak} day(s)</div>
-                    <div>Last completed: {lastLog}</div>
+                <div className="stack">
+                    <h3 className="card-title">{habit.name}</h3>
+                    <div className="meta">
+                        <span className="meta-item">Streak: <strong>{habit.streak}</strong> day(s)</span>
+                        <span className="dot">•</span>
+                        <span className="meta-item">Last completed: {lastLog}</span>
+                    </div>
                 </div>
 
-                <div style={{ display: "flex", gap: 8 }}>
-                    <button onClick={onComplete} disabled={disableBoth}>
-                        {completing ? "Saving..." : "Complete today"}
+                <div className="actions">
+                    <button className="btn" onClick={onComplete} disabled={disabled}>
+                        {completing ? "Saving…" : "Complete today"}
                     </button>
-                    <button onClick={onDelete} disabled={disableBoth}>
-                        {deleting ? "Deleting..." : "Delete"}
+                    <button className="btn btn-ghost-danger" onClick={onDelete} disabled={disabled}>
+                        {deleting ? "Deleting…" : "Delete"}
                     </button>
                 </div>
 
             </div>
+        </article>
 
-        </div>
-
+        
     );
 }
 

@@ -52,47 +52,63 @@ function App() {
 
   return (
 
-    <div style={{ maxWidth: 1080, margin: "40px auto", padding: "0 16px" }}>
+    <div className="app-shell">
 
-      {/* DEFAULT HEADER, going to have to edit later */}
-      <header style={{margin: "40px auto", padding: "5px 16px", backgroundColor: "gray"}}>
-        <h1>Habit Tracker</h1>
-        <nav>||  HOME  ||  ACCOUNT ||  EXAMPLE  ||  ETC  ||</nav>
+      <header className="site-header">
+        <div className="container header-inner">
+          <h1 className="brand">Habit Tracker</h1>
+          <nav className="site-nav">
+            <a href="#" className="nav-link is-active">Home</a>
+            <a href="#" className="nav-link">Account</a>
+            <a href="#" className="nav-link">Examples</a>
+            <a href="#" className="nav-link">About</a>
+          </nav>
+        </div>
       </header>
 
-      <HabitForm
-        onCreate={(name) => createHabitAction.mutate(name)}
-        isLoading={createHabitAction.isPending}
-      />
+      <main className="container content">
+        <section className="panel">
+          <h2 className="panel-title">Create a habit</h2>
+            <HabitForm
+              onCreate={(name) => createHabitAction.mutate(name)}
+              isLoading={createHabitAction.isPending}
+            />
+        </section>
 
-      {habitsQuery.isLoading ? (
-        <p>Loading...</p>
-      ) : habitsQuery.isError ? (
-        <p>Error loading habits</p>
-      ) : (
-        <HabitList
-          habits={habitsQuery.data || []}
-          onComplete={(name) => {
-            setCompletingName(name);
-            completeHabitAction.mutate(name);
-          }}
-          onDelete={(name) => {
-            setDeletingName(name);
-            deleteHabitAction.mutate(name);
-          }}
-          completingName={completingName}
-          deletingName={deletingName}
-        />
-      )}
+        <section className="panel">
+          <div className="panel-header">
+            <h2 className="panel-title">Your habits</h2>
+            {habitsQuery.isLoading && <span className="badge">Loading…</span>}
+            {habitsQuery.isError && <span className="badge badge-error">Error</span>}
+          </div>
 
-      {/* DEFAULT FOOTER, going to have to edit later */}
-      <footer style={{margin: "40px auto", padding: "5px 16px", backgroundColor: "black"}}>
-        @Copyright TJ, Nathaniel, Ryan, Mohamed, Sweta, 2025
+          {!habitsQuery.isLoading && !habitsQuery.isError && (
+            <HabitList
+              habits={habitsQuery.data || []}
+              onComplete={(name) => {
+                setCompletingName(name);
+                completeHabitAction.mutate(name);
+              }}
+              onDelete={(name) => {
+                setDeletingName(name);
+                deleteHabitAction.mutate(name);
+              }}
+              completingName={completingName}
+              deletingName={deletingName}
+            />
+          )}
+        </section>
+      </main>
+
+      <footer className="site-footer">
+        <div className="container footer-inner">
+          <p>© 2025 TJ, Nathaniel, Ryan, Mohamed, Sweta</p>
+        </div>
       </footer>
-
+      
     </div>
+    
   );
-
 }
 
 
