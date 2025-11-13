@@ -5,6 +5,9 @@ A habit-tracking app where users set goals (exercise, water, reading, sleep), tr
 - Backend: FastAPI (Python)
 - Dev UX: One command on Windows via PowerShell
 
+## Live Version
+Try it out live here: [Habit Tracker](https://habit-tracker-itsc-4155.vercel.app/)
+
 ## Prereqs
 - Python 3.10+ (on PATH)
 - Node 18+
