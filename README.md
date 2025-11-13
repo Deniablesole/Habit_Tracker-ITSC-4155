@@ -54,6 +54,7 @@ You can create the `habit_tracker` database in one of two ways:
 
 ```powershell
 psql -U postgres
+```
 
 Inside psql:
 
