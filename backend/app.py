@@ -1,12 +1,49 @@
 from domain import HabitTracker
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Depends
+from fastapi.middleware.cors import CORSMiddleware
+import datetime
+from sqlalchemy.orm import Session
+from pydantic import BaseModel
+from typing import List
+
+from database import engine, Base, get_db
+import models
+
+# Create database tables
+Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Habit API")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # change later for production
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 tracker = HabitTracker()
 
 
-# ALL THE FASTAPI STUFF YAY
+# Pydantic schemas for request/response
+class HabitCreate(BaseModel):
+    name: str
+
+
+class HabitLogResponse(BaseModel):
+    completion_date: str
+
+    class Config:
+        from_attributes = True
+
+
+class HabitResponse(BaseModel):
+    name: str
+    streak: int
+    logs: List[str]  # List of date strings
+
+    class Config:
+        from_attributes = True
 
 
 @app.get("/")
@@ -14,40 +51,115 @@ def root():
     return {"message": "Habit API up. See /docs"}
 
 
-def serialize(h):
-    return {"name": h.name, "streak": h.streak, "logs": [d.isoformat() for d in h.logs]}
-
-
 @app.get("/health")
 def health():
     return {"status": "ok"}
 
 
-@app.get("/habits")
-def list_habits():
-    return [serialize(h) for h in tracker.show_habits()]
+@app.get("/habits", response_model=List[HabitResponse])
+def list_habits(db: Session = Depends(get_db)):
+    habits = db.query(models.Habit).all()
+
+    # Transform to match frontend expectations
+    result = []
+    for habit in habits:
+        result.append(
+            {
+                "name": habit.name,
+                "streak": habit.streak,
+                "logs": [log.completion_date.isoformat() for log in habit.logs],
+            }
+        )
+
+    return result
 
 
-@app.post("/habits")
-def create_habit(payload: dict):
-    name = (payload.get("name") or "").strip()
-    if not name:
-        raise HTTPException(422, detail="Name required")
-    if not tracker.add_habit(name):
-        raise HTTPException(409, detail="Habit already exists")
-    return serialize(tracker.habits[name])
+@app.post("/habits", response_model=HabitResponse)
+def create_habit(habit: HabitCreate, db: Session = Depends(get_db)):
+    # Check if habit already exists
+    existing = db.query(models.Habit).filter(models.Habit.name == habit.name).first()
+    if existing:
+        raise HTTPException(status_code=409, detail="Habit already exists")
+
+    # Create new habit
+    new_habit = models.Habit(name=habit.name, streak=0)
+    db.add(new_habit)
+    db.commit()
+    db.refresh(new_habit)
+
+    return {"name": new_habit.name, "streak": new_habit.streak, "logs": []}
 
 
-@app.post("/habits/{name}/complete")
-def complete_habit(name: str):
-    h = tracker.complete_habit(name)
-    if h is None:
-        raise HTTPException(404, detail="Habit not found")
-    return serialize(h)
+@app.post("/habits/{name}/complete", response_model=HabitResponse)
+def complete_habit(name: str, db: Session = Depends(get_db)):
+    # Find habit
+    habit = db.query(models.Habit).filter(models.Habit.name == name).first()
+    if not habit:
+        raise HTTPException(status_code=404, detail="Habit not found")
+
+    today = datetime.date.today()
+
+    # Check if already logged today
+    existing_log = (
+        db.query(models.HabitLog)
+        .filter(
+            models.HabitLog.habit_id == habit.id,
+            models.HabitLog.completion_date == today,
+        )
+        .first()
+    )
+
+    if existing_log:
+        # Already completed today, just return current state
+        return {
+            "name": habit.name,
+            "streak": habit.streak,
+            "logs": [log.completion_date.isoformat() for log in habit.logs],
+        }
+
+    # Get all logs sorted by date
+    all_logs = (
+        db.query(models.HabitLog)
+        .filter(models.HabitLog.habit_id == habit.id)
+        .order_by(models.HabitLog.completion_date.desc())
+        .all()
+    )
+
+    # Calculate new streak
+    if all_logs:
+        last_log_date = all_logs[0].completion_date
+        days_diff = (today - last_log_date).days
+
+        if days_diff == 1:
+            # Consecutive day
+            habit.streak += 1
+        else:
+            # Streak broken, restart
+            habit.streak = 1
+    else:
+        # First log ever
+        habit.streak = 1
+
+    # Create new log
+    new_log = models.HabitLog(habit_id=habit.id, completion_date=today)
+    db.add(new_log)
+    db.commit()
+    db.refresh(habit)
+
+    return {
+        "name": habit.name,
+        "streak": habit.streak,
+        "logs": [log.completion_date.isoformat() for log in habit.logs],
+    }
 
 
 @app.delete("/habits/{name}")
-def delete_habit(name: str):
-    if not tracker.delete_habit(name):
-        raise HTTPException(404, detail="Habit not found")
+def delete_habit(name: str, db: Session = Depends(get_db)):
+    habit = db.query(models.Habit).filter(models.Habit.name == name).first()
+    if not habit:
+        raise HTTPException(status_code=404, detail="Habit not found")
+
+    db.delete(habit)
+    db.commit()
+
     return {"ok": True}
