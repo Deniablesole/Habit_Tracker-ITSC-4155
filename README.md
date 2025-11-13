@@ -11,7 +11,7 @@ Try it out live here: [Habit Tracker](https://habit-tracker-itsc-4155.vercel.app
 ## Prereqs
 - Python 3.10+ (on PATH)
 - Node 18+
-PostgreSQL installed locally
+- PostgreSQL installed locally
 # 
 
 # Steps For Setup:
