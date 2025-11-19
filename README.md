@@ -9,7 +9,7 @@ A habit-tracking app where users set goals (exercise, water, reading, sleep), tr
 Try it out live here: [Habit Tracker](https://habit-tracker-itsc-4155.vercel.app/)
 
 ## Prereqs
-- Python 3.10+ (on PATH)
+- Python 3.12 (on PATH)
 - Node 18+
 - PostgreSQL installed locally
 # 
@@ -45,7 +45,7 @@ You can create the `habit_tracker` database in one of two ways:
 
 ### Option A — Using pgAdmin (easiest)
 1. Download pgAdmin (GUI for PostgreSQL)
-2. Open pgAdmin and connect to your local server
+2. Open pgAdmin and connect to your local server (Port 5173)
 3. Right-click “Databases” → “Create” → “Database…”
 4. Name it: `habit_tracker`
 5. Save
@@ -68,7 +68,7 @@ CREATE DATABASE habit_tracker;
 1. In the `backend/` folder, create a file named `.env`.
 2. Add the following line, replacing `<your_database_url>` with your PostgreSQL URL:
 
-- DATABASE_URL=postgresql://username:password@localhost:5432/habit_tracker
+- DATABASE_URL=postgresql://username:password@localhost:5173/habit_tracker
 
 This ensures everyone can run the backend locally without committing sensitive credentials.
 
