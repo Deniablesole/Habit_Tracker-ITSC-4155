@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Habit Tracker | Dashboard</title>
+    <style>
+         body {
+            background-color: #FAFAFB;
+            color: #2F80ED;
+            margin: 0;
+            padding: 0;
+            font-family: 'Times New Roman', Times, serif;
+         }
+
+         /* NAVIGATION BAR */
+         .navbar {
+            display: flex;
+            justify-content: space-between; /* logo left, links right */
+            align-items: center;
+            background-color: #2F80ED;
+            padding: 15px 40px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+         }
+
+         .nav-left .logo {
+            font-size: 24px;        
+            font-family: 'Times New Roman', Times, serif;
+            font-weight: 600;         
+            color: white;             
+         }
+
+         .nav-right {
+            display: flex;
+            gap: 25px;
+         }
+
+         .nav-link {
+            text-decoration: none;
+            color: white;
+            font-size: 18px;
+            font-family: 'Times New Roman', Times, serif;
+         }
+
+         .nav-link:hover {
+            text-decoration: underline;
+         }
+
+         /* HEADER SECTION */
+         .header-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 40px 60px;
+         }
+
+         .greeting {
+            font-size: 32px;
+            font-weight: bold;
+         }
+
+         .streak-box {
+            background: #ffffff;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #ccc;
+            font-size: 20px;
+         }
+
+         /* HABIT CARDS */
+         .cards-container {
+            display: flex;
+            justify-content: space-evenly;
+            margin: 20px 40px;
+            gap: 20px;
+            flex-wrap: wrap;
+         }
+
+         .habit-card {
+            background: #ffffff;
+            width: 22%;
+            min-width: 200px;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 0 12px #ccc;
+         }
+
+         .habit-card h3 {
+            margin-bottom: 10px;
+            font-size: 22px;
+         }
+
+         /* CHARTS SECTION */
+         .charts-container {
+            display: flex;
+            justify-content: space-evenly;
+            margin: 40px;
+            flex-wrap: wrap;
+         }
+
+         .chart-box {
+            background: #ffffff;
+            width: 40%;
+            min-width: 300px;
+            height: 300px;
+            border-radius: 15px;
+            box-shadow: 0 0 12px #ccc;
+            padding: 20px;
+            text-align: center;
+         }
+
+         /* FOOTER */
+         footer {
+            margin-top: 50px;
+            background-color: #ffffff;
+            text-align: center;
+            padding: 20px;
+            box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+         }
+
+         footer a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #2F80ED;
+         }
+
+         footer a:hover {
+            text-decoration: underline;
+         }
+
+     </style>
+ </head>
+ <body>
+
+     <!-- NAVIGATION BAR -->
+     <div class="navbar">
+         <div class="nav-left">
+             <span class="logo">HabitTracker</span>
+         </div>
+         <div class="nav-right">
+            <a class="nav-link" href="dashboard.html">Dashboard</a>
+            <a class="nav-link" href="habits.html">Habits</a>
+            <a class="nav-link" href="progress.html">Progress</a>
+            <a class="nav-link" href="streaks.html">Streaks</a>
+            <a class="nav-link" href="profile.html">Profile</a>
+            <a class="nav-link" href="index.html">Logout</a>
+         </div>
+     </div>
+
+     <!-- HEADER SECTION -->
+     <div class="header-section">
+        <div class="greeting">Hello, User!</div>
+        <div class="streak-box">🔥 Streak: 5 days</div>
+     </div>
+
+     <!-- HABIT CARDS -->
+     <div class="cards-container">
+         <div class="habit-card">
+             <h3>Exercise</h3>
+             <p>Track your daily workouts</p>
+         </div>
+
+         <div class="habit-card">
+             <h3>Water</h3>
+             <p>Stay hydrated today</p>
+         </div>
+
+         <div class="habit-card">
+             <h3>Reading</h3>
+             <p>Read for at least 10 minutes</p>
+         </div>
+
+         <div class="habit-card">
+             <h3>Sleep</h3>
+             <p>Get your full rest</p>
+         </div>
+     </div>
+
+     <!-- CHARTS -->
+     <div class="charts-container">
+         <div class="chart-box">
+             <h3>Today's Completion</h3>
+             <p>(Chart Placeholder)</p>
+         </div>
+
+         <div class="chart-box">
+             <h3>Weekly Completion</h3>
+             <p>(Chart Placeholder)</p>
+         </div>
+     </div>
+
+     <!-- FOOTER -->
+     <footer>
+         <a href="#">About</a>
+         <a href="#">Help</a>
+         <a href="#">Contact</a>
+     </footer>
+
+ </body>
+ </html>
