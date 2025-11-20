@@ -66,7 +66,7 @@ CREATE DATABASE habit_tracker;
 ### Setup Environment Variables
 
 1. In the `backend/` folder, create a file named `.env`.
-2. Add the following line, replacing `<your_database_url>` with your PostgreSQL URL:
+2. Add the following line, replacing `<your_database_url>` with your PostgreSQL URL (replace username, password, and localhost port:
 
 - DATABASE_URL=postgresql://username:password@localhost:5173/habit_tracker
 
