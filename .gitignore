@@ -8,6 +8,21 @@ __pycache__/
 *.pyc
 backend/.venv/
 
+# Environment variables
+backend/.env
+.env
+*.env
+.env.local
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Alembic
+backend/alembic/versions/*.pyc
+backend/alembic/__pycache__/
+
 # OS
 .DS_Store
 Thumbs.db
