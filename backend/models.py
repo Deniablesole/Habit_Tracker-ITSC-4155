@@ -9,8 +9,6 @@ class Habit(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, unique=True, index=True, nullable=False)
-    category = Column(String, nullable=True)
-    goal = Column(String, nullable=True)
     streak = Column(Integer, default=0)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
