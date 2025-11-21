@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Habit Tracker | Login</title>
+    <style>
+        body {
+            background-color: #FAFAFB;
+            color: #2F80ED;
+            margin: 0;
+            padding: 0;
+            font-family: 'Times New Roman', Times, serif;
+            text-align: center;
+        }
+
+        .container {
+            margin-top: 100px;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #ccc;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #2F80ED;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #1b5fc6;
+        }
+
+        a {
+            color: #2F80ED;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .error {
+            color: red;
+            margin-top: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Habit Tracker</h1>
+    </header>
+    <main>
+        <div class="container">
+            <h2>Login</h2>
+
+            <form id="loginForm">
+                <input type="text" id="username" placeholder="Username" required><br>
+                <input type="password" id="password" placeholder="Password" required><br>
+                <button type="submit">Login</button>
+            </form>
+
+            <p id="errorMessage" class="error"></p>
+
+            <p><a href="forgot.html">Forgot Username or Password?</a></p>
+            <p>Don't have an account? <a href="register.html">Register here</a></p>
+        </div>
+    </main>
+
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
+            event.preventDefault();  //Prevent form from submitting
+
+            //Hardcoded values (replace with API/database later)
+            let correctUsername = "user";
+            let correctPassword = "pass";
+
+            let username = document.getElementById("username").value;
+            let password = document.getElementById("password").value;
+            let errorMessage = document.getElementById("errorMessage");
+
+            if (username === correctUsername && password === correctPassword) {
+                window.location.href = "webpage/dashboard.html";  // Redirect on success
+            } else {
+                errorMessage.textContent = "Incorrect username or password.";
+            }
+        });
+    </script>
+</body>
+</html>

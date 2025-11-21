@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Habit Tracker | Progress</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            background-color: #FAFAFB;
+            color: #2F80ED;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #2F80ED;
+            padding: 15px 40px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-left .logo {
+            font-size: 24px;
+            font-weight: 600;
+            color: white;
+        }
+
+        .nav-right {
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: white;
+            font-size: 18px;
+        }
+
+        .nav-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Page Header */
+        .header-section {
+            padding: 30px 50px;
+        }
+
+        .header-section h1 {
+            font-size: 32px;
+            margin: 0;
+        }
+
+        /* Filters */
+        .filters {
+            display: flex;
+            gap: 20px;
+            padding: 20px 50px;
+            align-items: center;
+        }
+
+        .filters label {
+            font-size: 18px;
+        }
+
+        select, input[type="date"] {
+            padding: 5px 10px;
+            font-size: 16px;
+        }
+
+        /* Charts Container */
+        .charts-container {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            padding: 0 50px;
+        }
+
+        .chart-box {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 0 12px #ccc;
+            padding: 20px;
+            text-align: center;
+            min-height: 250px;
+        }
+
+        /* Insight Section */
+        .insight {
+            padding: 30px 50px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVIGATION BAR -->
+    <div class="navbar">
+        <div class="nav-left">
+            <span class="logo">HabitTracker</span>
+        </div>
+        <div class="nav-right">
+            <a class="nav-link" href="dashboard.html">Dashboard</a>
+            <a class="nav-link" href="habits.html">Habits</a>
+            <a class="nav-link" href="progress.html">Progress</a>
+            <a class="nav-link" href="streaks.html">Streaks</a>
+            <a class="nav-link" href="profile.html">Profile</a>
+            <a class="nav-link" href="index.html">Logout</a>
+        </div>
+    </div>
+
+    <!-- PAGE HEADER -->
+    <div class="header-section">
+        <h1>Progress</h1>
+    </div>
+
+    <!-- FILTERS -->
+    <div class="filters">
+        <label>
+            Habit:
+            <select>
+                <option>All Habits</option>
+                <option>Exercise</option>
+                <option>Reading</option>
+                <option>Water</option>
+                <option>Sleep</option>
+            </select>
+        </label>
+
+        <label>
+            Time Range:
+            <input type="date"> - <input type="date">
+        </label>
+    </div>
+
+    <!-- CHARTS -->
+    <div class="charts-container">
+        <div class="chart-box" id="lineChart">
+            <h3>Trend Over Time</h3>
+            <p>(Line Chart Placeholder)</p>
+        </div>
+        <div class="chart-box" id="barChart">
+            <h3>Weekly Totals</h3>
+            <p>(Bar Chart Placeholder)</p>
+        </div>
+        <div class="chart-box" id="donutChart">
+            <h3>Completion Rate</h3>
+            <p>(Donut Chart Placeholder)</p>
+        </div>
+    </div>
+
+    <!-- INSIGHT -->
+    <div class="insight">
+        Insight: You completed [%] of goals this week.
+    </div>
+
+</body>
+</html>
