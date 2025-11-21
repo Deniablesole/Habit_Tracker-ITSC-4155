@@ -8,7 +8,8 @@
     "dev": "concurrently -k \"npm:dev:api\" \"npm:dev:web\"",
     "dev:web": "cd habit-web && vite --host 127.0.0.1 --port 5174",
     "dev:api": "cd backend && .venv\\Scripts\\python -m uvicorn app:app --reload --port 8000",
-    "build:web": "cd habit-web && npm run build"
+    "build:web": "cd habit-web && npm run build",
+    "dev:pg": "cd frontend && vite --host 127.0.0.1 --port 5175"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.90.2",
