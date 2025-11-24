@@ -8,10 +8,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "habit-project": "file:.."
+    "habit-project": "file:..",
+    "react-router-dom": "^7.9.6"
   },
   "devDependencies": {
     "vite": "^7.2.2"
   }
 }
-

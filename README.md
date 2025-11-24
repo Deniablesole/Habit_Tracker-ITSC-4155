@@ -28,6 +28,11 @@ Try it out live here: [Habit Tracker](https://habit-tracker-itsc-4155.vercel.app
 npm run setup
 npm run dev 
 ```
+This will install all dependencies, including the correct versions of React, React DOM, and React Router.
+
+### If you encounter "Invalid hook call" errors:
+- Delete the node_modules folder inside habit-web/
+- Run npm install again inside habit-web/
 
 ## 3) Open Front-end
 - Front-end: http://localhost:5173
@@ -86,6 +91,27 @@ Inside /backend
 
 ```powershell
 uvicorn app:app --reload
+```
+
+## 8) Database Migrations with Alembic
+Create a migration:
+```powershell
+alembic revision --autogenerate -m "Migration description"
+```
+
+Apply migrations to database:
+```powershell
+alembic upgrade head
+```
+
+Get the latest version of the database:
+```powershell
+alembic current
+```
+
+To ensure your database is at the latest migration:
+```powershell
+alembic upgrade head
 ```
 
 ## Backend URLs
