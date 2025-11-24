@@ -32,9 +32,11 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
 
 def get_password_hash(password: str) -> str:
     """Hash a password using bcrypt."""
-     # Bcrypt has a 72-byte limit, so truncate if necessary
-    if len(password.encode('utf-8')) > 72:
-        password = password[:72]
+    # Bcrypt has a 72-byte limit, so if necessary convert to bytes first, then truncate, then decode back
+    password_bytes = password.encode("utf-8")
+    if len(password_bytes) > 72:
+        password_bytes = password_bytes[:72]
+        password = password_bytes.decode("utf-8", errors="ignore")
     return pwd_context.hash(password)
 
 
@@ -71,8 +73,7 @@ def authenticate_user(db: Session, username: str, password: str):
 
 
 async def get_current_user(
-    token: str = Depends(oauth2_scheme),
-    db: Session = Depends(get_db)
+    token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)
 ):
     """Get the current authenticated user from JWT token."""
     credentials_exception = HTTPException(
@@ -87,7 +88,7 @@ async def get_current_user(
             raise credentials_exception
     except JWTError:
         raise credentials_exception
-    
+
     user = get_user_by_username(db, username=username)
     if user is None:
         raise credentials_exception
@@ -95,7 +96,7 @@ async def get_current_user(
 
 
 async def get_current_active_user(
-    current_user: models.User = Depends(get_current_user)
+    current_user: models.User = Depends(get_current_user),
 ):
     """Get the current active user."""
     if not current_user.is_active:
