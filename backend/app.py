@@ -28,7 +28,13 @@ app = FastAPI(title="Habit API")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://habit-tracker-itsc-4155.vercel.app"], #Vercel front-end URL
+    allow_origins=[
+        "https://habit-tracker-itsc-4155.vercel.app", # Vercel front-end URL
+        "http://localhost:5173",
+        "http://localhost:5174",
+        "http://127.0.0.1:5173",
+        "http://127.0.0.1:5174",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -90,7 +96,7 @@ def health():
     return {"status": "ok"}
 
 
-# Authentication Endpoints 
+# Authentication Endpoints
 @app.post("/register", response_model=UserResponse, status_code=status.HTTP_201_CREATED)
 def register(user: UserCreate, db: Session = Depends(get_db)):
     """Register a new user."""

@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { listHabits, createHabit, completeHabit, deleteHabit } from "./api/habits";
 import HabitForm from "./components/HabitForm";
 import HabitList from "./components/HabitList";
@@ -14,11 +14,26 @@ function sleep(ms) {
 
 function App() {
 
+  const navigate = useNavigate();
+
   // Time for silly react queries :,)
   const qc = useQueryClient();
 
   const [completingName, setCompletingName] = useState(null);
   const [deletingName, setDeletingName] = useState(null);
+
+  // Check authentication on mount
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      navigate("/login");
+    }
+  }, [navigate]);
+
+   const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
 
   // READ habits
   const habitsQuery = useQuery({ queryKey: ["habits"], queryFn: listHabits });
@@ -63,6 +78,13 @@ function App() {
             <a href="#" className="nav-link">Account</a>
             <a href="#" className="nav-link">Examples</a>
             <a href="#" className="nav-link">About</a>
+            <button 
+              className="btn btn-ghost-danger" 
+              onClick={handleLogout}
+              style={{ marginLeft: '10px' }}
+            >
+              Logout
+            </button>
           </nav>
         </div>
       </header>
