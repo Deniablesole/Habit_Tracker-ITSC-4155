@@ -28,7 +28,7 @@ app = FastAPI(title="Habit API")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # change later for production
+    allow_origins=["https://habit-tracker-itsc-4155.vercel.app"], #Vercel front-end URL
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
