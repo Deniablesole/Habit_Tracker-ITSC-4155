@@ -3,6 +3,7 @@ from fastapi import FastAPI, HTTPException, Depends, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import OAuth2PasswordRequestForm
 import datetime
+from datetime import timedelta
 from sqlalchemy.orm import Session
 from pydantic import BaseModel, EmailStr
 from typing import List, Optional
