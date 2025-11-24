@@ -75,6 +75,16 @@ CREATE DATABASE habit_tracker;
 
 - DATABASE_URL=postgresql://username:password@localhost:5173/habit_tracker
 
+3. The backend requires a `SECRET_KEY`
+```powershell
+python -c "import secrets; print(secrets.token_hex(32))"
+```
+This will print a 64-character hexadecimal string. Copy it and add it to your .env file:
+
+```env
+SECRET_KEY=<paste-your-generated-key-here>
+```
+
 This ensures everyone can run the backend locally without committing sensitive credentials.
 
 ## 6) Setup Backend Environment
